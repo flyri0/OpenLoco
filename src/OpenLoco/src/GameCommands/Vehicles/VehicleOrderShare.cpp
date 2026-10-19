@@ -1,11 +1,9 @@
 #include "GameCommands/Vehicles/VehicleOrderShare.h"
 #include "Entities/EntityManager.h"
 #include "GameCommands/GameCommands.h"
-#include "Objects/VehicleObject.h"
 #include "S5/Limits.h"
 #include "Vehicles/OrderManager.h"
 #include "Vehicles/Orders.h"
-#include "Vehicles/Vehicle.h"
 #include "Vehicles/VehicleHead.h"
 #include "Vehicles/VehicleManager.h"
 
@@ -24,6 +22,19 @@ namespace OpenLoco::GameCommands
         {
             setErrorText(StringIds::orderTypeNotValidForAircraft);
             return false;
+        }
+
+        return true;
+    }
+
+    static bool areOrdersValidForVehicle(const Vehicles::VehicleHead& sourceHead, const Vehicles::VehicleHead& targetHead)
+    {
+        for (const auto& order : Vehicles::OrderRingView(sourceHead.orderTableOffset))
+        {
+            if (!isOrderValidForVehicle(order, targetHead))
+            {
+                return false;
+            }
         }
 
         return true;
@@ -87,20 +98,16 @@ namespace OpenLoco::GameCommands
             return 0;
         }
 
-        for (const auto& order : Vehicles::OrderRingView(sourceHead->orderTableOffset))
+        if (!areOrdersValidForVehicle(*sourceHead, *head))
         {
-            if (!isOrderValidForVehicle(order, *head))
+            return kFailure;
+        }
+
+        for (auto* sharedHead : VehicleManager::VehicleList())
+        {
+            if (sharedHead->orderTableOffset == sourceHead->orderTableOffset && !areOrdersValidForVehicle(*sourceHead, *sharedHead))
             {
                 return kFailure;
-            }
-
-            for (auto* sharedHead : VehicleManager::VehicleList())
-            {
-                if (sharedHead->orderTableOffset == sourceHead->orderTableOffset
-                    && !isOrderValidForVehicle(order, *sharedHead))
-                {
-                    return kFailure;
-                }
             }
         }
 
