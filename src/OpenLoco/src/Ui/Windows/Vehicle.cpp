@@ -3790,6 +3790,12 @@ namespace OpenLoco::Ui::Windows::Vehicle
             if (toolWindow != nullptr && toolWindow->type == self.type && toolWindow->number != self.number
                 && ToolManager::isToolActive(toolWindow->type, toolWindow->number, widx::tool))
             {
+                auto* destination = Common::getVehicle(*toolWindow);
+                if (destination == nullptr || destination->orderTableOffset == head->orderTableOffset)
+                {
+                    return;
+                }
+
                 Audio::playSound(Audio::SoundId::waypoint, Audio::ChannelId::ui, Input::getDragLastLocation().x);
                 if (item == -1)
                 {
