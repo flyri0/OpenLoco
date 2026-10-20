@@ -121,7 +121,7 @@ namespace OpenLoco::Ui::Windows::VehicleList
         Widgets::TableHeader(Widx::kSortReliability, { 479, 43 }, { 67, 12 }, WindowColour::secondary, Widget::kContentNull, StringIds::tooltip_sort_by_reliability),
         Widgets::ScrollView(Widx::kScrollview, { 3, 56 }, { 544, 138 }, WindowColour::secondary, Scrollbars::vertical),
         Widgets::Label(Widx::kStatusBar, { 3, kWindowSize.height - 13 }, { kWindowSize.width - kResizeHandleSize, 10 }, WindowColour::secondary, ContentAlign::left, StringIds::black_stringid),
-        Widgets::dropdownWidgets(Widx::kFilterType, Widx::kFilterTypeBtn, { 280 - 16, 200 }, { 120, 12 }, WindowColour::secondary, StringIds::wcolour2_stringid),
+        Widgets::dropdownWidgets(Widx::kFilterType, Widx::kFilterTypeBtn, { 280 - 16, 200 }, { 160, 12 }, WindowColour::secondary, StringIds::wcolour2_stringid),
         Widgets::dropdownWidgets(Widx::kCargoType, Widx::kCargoTypeBtn, { 402 - 16, 200 }, { 150, 12 }, WindowColour::secondary, StringIds::wcolour2_stringid)
 
     );
