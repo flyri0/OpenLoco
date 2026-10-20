@@ -1345,7 +1345,7 @@ namespace OpenLoco::Ui::Windows::Vehicle
         {
             if (id == Widx::kBuildNew)
             {
-                if (itemIndex == 0)
+                if (itemIndex <= 0)
                 {
                     BuildVehicle::openByVehicleId(EntityId(self.number));
                 }
