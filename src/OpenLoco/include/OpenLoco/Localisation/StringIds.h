@@ -2187,6 +2187,12 @@ namespace OpenLoco::StringIds
     constexpr StringId cant_share_vehicle_orders = 2475;
     constexpr StringId cant_make_vehicle_orders_independent = 2476;
     constexpr StringId dropdown_clone_vehicle_shared_orders = 2477;
+    constexpr StringId group_by_shared_orders = 2478;
+    constexpr StringId vehicle_order_group_collapsed = 2479;
+    constexpr StringId vehicle_order_group_expanded = 2480;
+    constexpr StringId vehicle_order_group_profit_pos = 2481;
+    constexpr StringId vehicle_order_group_profit_neg = 2482;
+    constexpr StringId tooltip_toggle_order_group = 2483;
 
     constexpr StringId temporary_object_load_str_0 = 8192;
     constexpr StringId temporary_object_load_str_1 = 8193;
