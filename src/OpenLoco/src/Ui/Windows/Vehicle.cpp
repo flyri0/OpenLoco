@@ -3131,10 +3131,7 @@ namespace OpenLoco::Ui::Windows::Vehicle
                     break;
                 }
                 case Widx::kShareOrders:
-                    if (head->sizeOfOrderTable > 1)
-                    {
-                        ToolManager::toolSet(self, widx::shareOrders, CursorId::crosshair);
-                    }
+                    ToolManager::toolSet(self, widx::shareOrders, CursorId::crosshair);
                     self.invalidate();
                     break;
                 case Widx::kStopSharing:
@@ -3590,13 +3587,12 @@ namespace OpenLoco::Ui::Windows::Vehicle
         {
             auto* source = Common::getVehicle(self);
             if (source == nullptr || target == nullptr || source == target || source->owner != CompanyManager::getControllingId()
-                || source->sizeOfOrderTable == 1 || target->owner != source->owner || target->vehicleType != source->vehicleType)
+                || target->owner != source->owner || target->vehicleType != source->vehicleType)
             {
                 return false;
             }
 
             GameCommands::VehicleOrderShareArgs args{};
-            // The route window is the source; the clicked vehicle receives its orders.
             args.head = target->id;
             args.sourceHead = source->id;
             GameCommands::setErrorTitle(StringIds::cant_share_vehicle_orders);
@@ -3736,7 +3732,7 @@ namespace OpenLoco::Ui::Windows::Vehicle
                     auto* vehicle = entity->asBase<Vehicles::VehicleBase>();
                     auto* source = Common::getVehicle(self);
                     auto* target = vehicle == nullptr ? nullptr : EntityManager::get<Vehicles::VehicleHead>(vehicle->getHead());
-                    if (source != nullptr && target != nullptr && source != target && source->sizeOfOrderTable > 1
+                    if (source != nullptr && target != nullptr && source != target
                         && target->owner == source->owner && target->vehicleType == source->vehicleType)
                     {
                         out = true;
@@ -3966,11 +3962,7 @@ namespace OpenLoco::Ui::Windows::Vehicle
             self.widgets[widx::stopSharing].hidden = !orderTableIsShared || shareToolActive;
             self.widgets[widx::stopSharing].top = self.height - 13;
             self.widgets[widx::stopSharing].bottom = self.height - 2;
-            self.disabledWidgets |= (1 << widx::shareOrders);
-            if (head->sizeOfOrderTable > 1)
-            {
-                self.disabledWidgets &= ~(1 << widx::shareOrders);
-            }
+            self.disabledWidgets &= ~(1 << widx::shareOrders);
             self.activatedWidgets &= ~(1 << widx::shareOrders);
             if (shareToolActive)
             {

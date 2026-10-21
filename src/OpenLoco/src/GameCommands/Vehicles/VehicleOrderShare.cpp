@@ -6,6 +6,7 @@
 #include "Vehicles/Orders.h"
 #include "Vehicles/VehicleHead.h"
 #include "Vehicles/VehicleManager.h"
+#include <utility>
 
 namespace OpenLoco::GameCommands
 {
@@ -87,10 +88,9 @@ namespace OpenLoco::GameCommands
             return kFailure;
         }
 
-        if (sourceHead->sizeOfOrderTable == 1)
+        if (sourceHead->sizeOfOrderTable == 1 && head->sizeOfOrderTable > 1)
         {
-            setErrorText(StringIds::no_route_defined);
-            return kFailure;
+            std::swap(head, sourceHead);
         }
 
         if (head == sourceHead || head->orderTableOffset == sourceHead->orderTableOffset)
